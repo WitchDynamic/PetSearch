@@ -1,14 +1,16 @@
 import type { AppProps } from "next/app";
 import { useMemo, useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
+import {CssBaseline, Container, ThemeProvider} from "@mui/material";
+import type {SxProps , Theme} from "@mui/material";
 // Our imports.
-import { darkModeTheme, lightModeTheme } from "@/utils/theme/material-theme";
+import { darkModeTheme, lightModeTheme } from "@/theme/material-theme";
 import { LocationProvider } from "@/hooks/LocationContext";
 import NavBar from "@/components/layout/NavBar";
 import HeadMeta from "@/components/meta/HeadMeta";
-import "@/styles/globals.css";
+
+const containerSx: SxProps<Theme> ={
+  paddingBottom: "2rem"
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -25,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <LocationProvider>
         <HeadMeta />
         <NavBar isDarkMode={isDarkMode} onToggleDarkMode={handleToggleDarkMode} />
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" sx={containerSx}>
           <Component {...pageProps} />
         </Container>
       </LocationProvider>
