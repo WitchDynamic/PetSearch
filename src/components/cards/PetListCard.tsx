@@ -1,10 +1,10 @@
-import { Card, Typography, Grid, CardActionArea } from "@mui/material";
+import { Card, Typography, Grid, CardActionArea, Link as MuiLink } from "@mui/material";
 import Image from "next/image";
 import CatIcon from "@/components/icons/CatIcon";
 import DogIcon from "@/components/icons/DogIcon";
 import { useSWRConfig } from "swr";
 import Link from "next/link";
-import type Pet from "@/models/Pet";
+import type Pet from "@/models/pet";
 
 type Props = {
   pet: Pet;
@@ -24,29 +24,27 @@ const textStyles = {
 export default function PetListCard(props: Props) {
   const { mutate } = useSWRConfig();
   function handleClick() {
-    mutate(`/api/pets/${props.pet.id}`, props.pet);
+    mutate(`pets/${props.pet.id}`, props.pet);
   }
   // Temporarily hardcoding to medium sized img, icon otherwise
-  const img = props.pet.primary_photo_cropped?.medium
-    ? props.pet.primary_photo_cropped.medium
-    : null;
+  const img = props.pet.primary_photo_cropped?.small ?? null;
+  const linkPath = `/pets/${props.pet.id}`;
 
   return (
     <Grid item key={props.pet.id}>
-      <Link
-        style={{ textDecoration: "none" }}
-        href={{
-          pathname: `/pets/${props.pet.id}`,
-        }}
+      <MuiLink
+          component={Link}
+          style={{ textDecoration: "none" }}
+          href={linkPath}
       >
         <CardActionArea onClick={handleClick}>
           <Card sx={{ maxWidth: "200px" }}>
             {img ? (
-              <Image src={img} width={200} height={200} alt="Picture of pet" />
+                <Image src={img} width={200} height={200} alt="Picture of pet" />
             ) : props.pet.type == "Cat" ? (
-              <CatIcon sx={petIcons} />
+                <CatIcon sx={petIcons} />
             ) : (
-              <DogIcon sx={petIcons} />
+                <DogIcon sx={petIcons} />
             )}
             <Typography sx={textStyles}>
               <b>{props.pet.name}</b>
@@ -58,7 +56,7 @@ export default function PetListCard(props: Props) {
             </Typography>
           </Card>
         </CardActionArea>
-      </Link>
+      </MuiLink>
     </Grid>
   );
 }
