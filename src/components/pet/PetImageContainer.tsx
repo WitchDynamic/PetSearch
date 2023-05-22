@@ -51,12 +51,13 @@ export default function PetImageContainer(props: Props) {
   const handleDotNavigation = (index: number) => {
     setImageIndex(index);
   };
+  console.log(props.photos[imgIndex].full);
 
   return (
     <Paper elevation={4}>
       <section className={styles.imageContainer}>
         <Image
-          src={props.photos[imgIndex].large}
+          src={props.photos[imgIndex].full}
           alt={props.name}
           sizes="600px"
           blurDataURL="/blur/grayBlur.png"
