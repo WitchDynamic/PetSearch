@@ -1,43 +1,40 @@
 import type { ParsedUrlQuery } from "querystring";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+import dynamic from "next/dynamic"
 import { useContext } from "react";
 import { useRouter } from "next/router";
+import { Alert, AlertTitle, CircularProgress } from "@mui/material";
 // Our imports.
 import type { LocationContextType } from "@/hooks/LocationContext";
 import { LocationContext } from "@/hooks/LocationContext";
 import SearchPageMeta from "@/components/meta/SearchPageMeta";
-import DisplaySearch from "@/components/pet-search/DisplaySearch";
+const DisplaySearch = dynamic(() => import("@/components/pet-search/DisplaySearch"), {
+      loading: () => <CircularProgress />
+});
 
 type QueryProps = {
-  petTypePlural: string;
   petType: string;
   invalidPetType: boolean;
   page: string;
   location: string;
 };
 
-const petSet = new Set(["dogs", "cats"]);
+const petMap = new Map().set("dogs","dog").set("cats","cat");
 
-// Validate query parameters and return custom queryProperties
 function getQueryProperties(query: ParsedUrlQuery, currentZipCode: string): QueryProps {
-  const petTypePlural = query.petTypePlural ? (query.petTypePlural as string) : "unknown";
+  const petType = typeof(query.petType) === "string" ? query.petType : "";
 
-  if (!petSet.has(petTypePlural)) {
+  if(!petMap.has(petType)){
     return {
-      petTypePlural: petTypePlural,
-      petType: petTypePlural,
+      petType: petType,
       invalidPetType: true,
       location: "",
       page: "",
     };
   }
-
-  const page = query.page ? (query.page as string) : "1";
-  const location = query.location ? (query.location as string) : currentZipCode;
+  const page = typeof(query.page) === "string"? query.page : "1";
+  const location = typeof(query.location) === "string" ? query.location : currentZipCode;
   return {
-    petTypePlural: petTypePlural,
-    petType: petTypePlural.slice(0, petTypePlural.length - 1),
+    petType: petMap.get(petType),
     invalidPetType: false,
     location: location,
     page,
@@ -56,7 +53,7 @@ export default function PetSearchPage() {
         <SearchPageMeta />
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
-          Pet Type: {props.petTypePlural} not supported.
+          Pet Type: {props.petType} not supported.
         </Alert>
       </>
     );
@@ -73,16 +70,15 @@ export default function PetSearchPage() {
   };
 
   const params = new URLSearchParams();
-  params.append("petType", props.petType);
+  params.append("type", props.petType);
   params.append("location", props.location);
   params.append("page", props.page);
-  const searchQueryURL = "/api/pets?" + params.toString();
+  const searchQueryURL = "pets?" + params.toString();
 
   return (
     <>
       <SearchPageMeta />
       <DisplaySearch
-        petTypePlural={props.petTypePlural}
         searchParams={params}
         searchQueryURL={searchQueryURL}
         onPageChange={handlePageChange}

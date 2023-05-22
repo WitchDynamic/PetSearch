@@ -1,9 +1,10 @@
 import useSWR from "swr";
 // Our imports.
-import type AccessToken from "@/types/AccessToken";
-import type Pet from "@/models/Pet";
+import type AccessToken from "@/models/accessToken";
+import type Pet from "@/models/pet";
 import useToken from "./useToken";
 
+const BASE_URL = "/api/";
 // All errors are handled by swr.
 const fetcher = async (url: string, accessToken: AccessToken | undefined) => {
   // Check if we have an access token.
@@ -12,10 +13,10 @@ const fetcher = async (url: string, accessToken: AccessToken | undefined) => {
   }
 
   // Call our api to fetch a pet with the passed id.
-  const response: Response = await fetch(url, {
+  const response: Response = await fetch(BASE_URL + url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${accessToken.token}`,
+      Authorization: accessToken.token,
       "Content-Type": "application/json",
     },
   });
@@ -42,7 +43,7 @@ const revalidateOptions = {
 export default function useSinglePet(id: string) {
   const { accessToken } = useToken(); // Get access token.
   const { data, error, isLoading } = useSWR(
-    accessToken ? `/api/pets/${id}` : null,
+    accessToken ? `pets/${id}` : null,
     (url) => fetcher(url, accessToken),
     revalidateOptions
   );

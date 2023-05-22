@@ -14,6 +14,7 @@ type Props = {
   petType: string;
   zipCode: string;
 };
+
 export default function PetSearchHeader(props: Props) {
   const upperCasePetType = props.petType.slice(0, 1).toUpperCase() + props.petType.slice(1);
   return (
@@ -22,7 +23,7 @@ export default function PetSearchHeader(props: Props) {
         {upperCasePetType}s within a 50 mile radius.
       </Typography>
       <Typography sx={zipStyles} variant="subtitle1">
-        Adoptable pets around Zip Code: {props.zipCode}
+        Adoptable {props.petType}s by zip code: {props.zipCode}
       </Typography>
     </>
   );

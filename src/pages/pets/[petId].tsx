@@ -1,16 +1,17 @@
+import dynamic from "next/dynamic"
 import { NextRouter, useRouter } from "next/router";
-import Alert from "@mui/material/Alert";
+import {CircularProgress, Alert} from "@mui/material";
 // Our import.
 import PetPageMeta from "@/components/meta/PetPageMeta";
-import DisplayInfo from "@/components/pet/DisplayInfo";
+const DisplayInfo = dynamic(() => import("@/components/pet/DisplayInfo"), {
+    loading: () => <CircularProgress />,
+});
 
 function getId(router: NextRouter): string {
-  const id = router.query?.petId;
-  if (typeof id !== "string") {
-    return "error";
-  }
-  if (Number.isNaN(parseInt(id))) {
-    return "error";
+  let id = router.query.petId ?? "error";
+
+  if(typeof id !== "string" || Number.isNaN(parseInt(id))){
+      id = "error";
   }
   return id;
 }
@@ -19,15 +20,15 @@ export default function PetPage() {
   const router = useRouter();
   const id = getId(router);
 
-  if (id === "error") {
-    return (
-      <>
-        <PetPageMeta />
-        <main>
-          <Alert severity="error">Invalid pet id entered.</Alert>
-        </main>
-      </>
-    );
+  if(id === "error"){
+      return (
+          <>
+              <PetPageMeta />
+              <main>
+                  <Alert severity="error">Invalid pet id entered.</Alert>
+              </main>
+          </>
+      );
   }
   return (
     <>

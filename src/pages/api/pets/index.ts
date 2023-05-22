@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { SafeParseReturnType } from "zod";
 // Our imports.
-import type Pet from "@/models/Pet";
-import type PetResponse from "@/models/PetResponse";
+import type Pet from "@/models/pet";
+import type PetResponse from "@/models/petResponse";
 import { petQuery, validateQuery } from "@/utils/db/query-validation";
 
 const MILE_RADIUS = "50";
@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Get search query params.
-    const petType = req.query.petType as string;
+    const petType = req.query.type as string;
     const location = req.query.location as string;
     let page = req.query.page as string;
     // Pre-defined undefined types right now until we have our front-end done.

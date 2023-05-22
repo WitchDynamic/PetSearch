@@ -1,6 +1,4 @@
-import Grid from "@mui/material/Grid";
-import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
+import { Grid, Skeleton, Typography } from "@mui/material";
 
 export default function DisplayInfoSkeleton() {
   return (
@@ -11,7 +9,7 @@ export default function DisplayInfoSkeleton() {
         </Typography>
       </Grid>
       <Grid item marginTop="0">
-        <Skeleton width={300} height={300} />
+        <Skeleton width={200} height={200} />
       </Grid>
       <Grid item textAlign="center">
         <Skeleton width={100} variant="text" />

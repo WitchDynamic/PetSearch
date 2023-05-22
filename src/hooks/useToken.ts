@@ -1,7 +1,7 @@
 import useSWR from "swr";
 // Our imports.
-import type AccessToken from "@/types/AccessToken";
-import { getStoredToken, storeAccessToken, tokenIsExpired } from "@/utils/token/token-manager";
+import type AccessToken from "@/models/accessToken";
+import { getStoredToken, storeAccessToken, tokenIsExpired } from "@/token/token-manager";
 
 const TOKEN_URL = "/api/token";
 
@@ -21,8 +21,9 @@ async function fetcher(url: string): Promise<AccessToken> {
     // Make SWR catch the failed response.
     throw new Error(responseData.message);
   }
+
   const accessToken: AccessToken = {
-    token: responseData.access_token,
+    token: "Bearer " + responseData.access_token,
     expirationDate: expirationTime,
   };
 
