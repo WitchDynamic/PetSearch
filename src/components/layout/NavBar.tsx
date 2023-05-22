@@ -1,11 +1,7 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
-import IconButton from "@mui/material/IconButton";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 // Our imports.
@@ -50,9 +46,9 @@ export default function MainNavigation(props: Props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href={"/"} style={{ color: "inherit", textDecoration: "none" }}>
+            <Button component={Link} href="/" color="inherit" sx={{textDecoration: "none"}}>
               PetSearch
-            </Link>
+            </Button>
           </Typography>
           <LocationButton onZipCodeChange={handleZipCodeChange} currentZip={zipCode} />
           <IconButton onClick={props.onToggleDarkMode} color="inherit">

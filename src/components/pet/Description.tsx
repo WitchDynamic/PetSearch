@@ -1,5 +1,4 @@
-import Typography from "@mui/material/Typography";
-import MaterialLink from "@mui/material/Link";
+import { Typography, Link as MaterialLink } from "@mui/material";
 import Link from "next/link";
 
 type Props = {
@@ -18,6 +17,7 @@ function decodeHtmlEntityString(encodedStr: string | null): string {
 
 export default function Description(props: Props) {
   let decodedDescription = decodeHtmlEntityString(props.description);
+
   return (
     <section>
       <Typography variant="h4">Description</Typography>

@@ -1,11 +1,13 @@
 import useSWR from "swr";
 import { useRef } from "react";
 // Our imports.
-import type AccessToken from "@/types/AccessToken";
-import type PetResponse from "@/models/PetResponse";
+import type AccessToken from "@/models/accessToken";
+import type PetResponse from "@/models/petResponse";
 import useToken from "./useToken";
 
 const ITEMS_PER_PAGE = 20;
+
+const BASE_URL = "/api/"
 
 // Let SWR handle all errors.
 const fetcher = async (url: string, accessToken: AccessToken | undefined) => {
@@ -15,10 +17,10 @@ const fetcher = async (url: string, accessToken: AccessToken | undefined) => {
   }
 
   // Call our endpoint.
-  const response: Response = await fetch(url, {
+  const response: Response = await fetch(BASE_URL + url, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${accessToken.token}`,
+      Authorization: accessToken.token,
       "Content-Type": "application/json",
     },
   });

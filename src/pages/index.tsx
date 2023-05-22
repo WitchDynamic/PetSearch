@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import Head from "next/head";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Box, Typography } from "@mui/material";
 // Our imports.
 import type { LocationContextType } from "@/hooks/LocationContext";
 import { LocationContext } from "@/hooks/LocationContext";

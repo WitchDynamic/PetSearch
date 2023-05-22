@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import Alert from "@mui/material/Alert";
+import { Alert } from "@mui/material";
 // Our imports.
 import useSinglePet from "@/hooks/useSinglePet";
 import DisplayInfoSkeleton from "@/components/pet/DisplayInfoSkeleton";

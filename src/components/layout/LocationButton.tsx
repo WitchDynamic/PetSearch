@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
-import { Button, Modal, Typography } from "@mui/material";
+import { Button, Modal, Typography, CircularProgress } from "@mui/material";
 // Our component.
 const LocationModal = dynamic(() => import("@/components/layout/LocationModal"), {
   loading: () => <CircularProgress />,

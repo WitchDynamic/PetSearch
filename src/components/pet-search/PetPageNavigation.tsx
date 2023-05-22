@@ -1,5 +1,8 @@
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+import {Pagination, Stack, SxProps, Theme} from "@mui/material";
+
+const paginationSx: SxProps<Theme> = {
+    paddingTop: "2rem"
+};
 
 type Props = {
   currentPage: number;
@@ -7,6 +10,7 @@ type Props = {
   isLoading: boolean;
   onPageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
 };
+
 export default function PetPageNavigation(props: Props) {
   return (
     <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
@@ -18,6 +22,7 @@ export default function PetPageNavigation(props: Props) {
         onChange={props.onPageChange}
         disabled={props.isLoading}
         size="large"
+        sx={paginationSx}
       />
     </Stack>
   );
